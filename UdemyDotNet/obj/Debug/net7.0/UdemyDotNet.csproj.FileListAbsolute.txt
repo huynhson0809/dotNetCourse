@@ -74,3 +74,5 @@ E:\back-end\.net\UdemyDotNet\UdemyDotNet\obj\Debug\net7.0\refint\UdemyDotNet.dll
 E:\back-end\.net\UdemyDotNet\UdemyDotNet\obj\Debug\net7.0\UdemyDotNet.pdb
 E:\back-end\.net\UdemyDotNet\UdemyDotNet\obj\Debug\net7.0\UdemyDotNet.genruntimeconfig.cache
 E:\back-end\.net\UdemyDotNet\UdemyDotNet\obj\Debug\net7.0\ref\UdemyDotNet.dll
+E:\back-end\.net\UdemyDotNet\UdemyDotNet\bin\Debug\net7.0\AutoMapper.dll
+E:\back-end\.net\UdemyDotNet\UdemyDotNet\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
