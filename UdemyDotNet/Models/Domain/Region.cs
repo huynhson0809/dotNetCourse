@@ -1,4 +1,6 @@
-﻿namespace UdemyDotNet.Models.Domain
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace UdemyDotNet.Models.Domain
 {
     public class Region
     {

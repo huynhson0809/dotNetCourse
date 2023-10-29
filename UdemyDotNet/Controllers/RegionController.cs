@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using UdemyDotNet.CustomActionFilters;
 using UdemyDotNet.Data;
 using UdemyDotNet.Models.Domain;
 using UdemyDotNet.Models.DTO;
@@ -77,6 +78,7 @@ namespace UdemyDotNet.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto) {
             //map dto to domain model
             //var regionDomainModel = new Region

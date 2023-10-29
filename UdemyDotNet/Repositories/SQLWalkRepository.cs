@@ -31,11 +31,39 @@ namespace UdemyDotNet.Repositories
             return walk;
         }
 
-        public async Task<List<Walk>> GetAllAsync()
+        public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null, 
+            string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 1000)
         {
             //var walks = await dbContext.Walks.ToListAsync(); // lúc chưa bao gồm relationship giữa bảng Difficulty và Region
-            var walks = await dbContext.Walks.Include("Difficulty").Include("Region").ToListAsync();
-            return walks;
+            //var walks = await dbContext.Walks.Include("Difficulty").Include("Region").ToListAsync(); cái này chỉ khả dụng khi không có filtering, sorting và pagination
+
+            var walks = dbContext.Walks.Include("Difficulty").Include("Region").AsQueryable();
+
+            //filtering
+            if(!string.IsNullOrWhiteSpace(filterOn) && !string.IsNullOrWhiteSpace(filterQuery))
+            {
+                if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = walks.Where(w=>w.Name.Contains(filterQuery));
+                }
+            }
+
+            //sorting
+            if (!string.IsNullOrWhiteSpace(sortBy))
+            {
+                if(sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = isAscending ? walks.OrderBy(w => w.Name) : walks.OrderByDescending(w => w.Name);
+                }
+                else if (sortBy.Equals("Length", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = isAscending ? walks.OrderBy(w => w.LengthInKm) : walks.OrderByDescending(w => w.LengthInKm);
+                }
+            }
+
+            //pagination
+            var skipResults = (pageNumber - 1) * pageSize;
+            return await walks.Skip(skipResults).Take(pageSize).ToListAsync();
         }
 
         public async Task<Walk?> GetByIdAsync(Guid id)
