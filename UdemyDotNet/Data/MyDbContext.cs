@@ -5,7 +5,7 @@ namespace UdemyDotNet.Data
 {
     public class MyDbContext: DbContext
     {
-        public MyDbContext(DbContextOptions dbContextOptions): base(dbContextOptions) {
+        public MyDbContext(DbContextOptions<MyDbContext> dbContextOptions): base(dbContextOptions) {
 
         }
         public DbSet<Difficulty> Difficulties { get; set; }

@@ -1,0 +1,3 @@
+﻿1. 
+- Authentication: xác định danh tính của người dùng
+- Authorization: xác định xem người dùng liệu có quyền làm chức năng gì đó không hoặc truy cập vào dữ liệu đó không
