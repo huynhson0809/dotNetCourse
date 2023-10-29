@@ -42,5 +42,45 @@ namespace UdemyDotNet.Controllers
             var walksDto = mapper.Map<List<WalkDto>>(walksDomainModel);
             return Ok(walksDto);
         }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var walkDomainModel = await walkRepository.GetByIdAsync(id);
+            if(walkDomainModel == null)
+            {
+                return NotFound();
+            }
+            var walkDto = mapper.Map<WalkDto>(walkDomainModel);
+            return Ok(walkDto);
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Update(Guid id, UpdateWalkRequestDto updateWalkRequestDto)
+        {
+            //map dto to domain model
+            var walkDomainModel = mapper.Map<Walk>(updateWalkRequestDto);
+
+            var existingWalk = await walkRepository.UpdateAsync(id, walkDomainModel);
+            if(existingWalk == null)
+            {
+                return NotFound();
+            }
+            return Ok(mapper.Map<WalkDto>(existingWalk));
+        }
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var existingWalkDomainModel = await walkRepository.DeleteAsync(id);
+            if(existingWalkDomainModel == null)
+            {
+                return NotFound();
+            }
+            return Ok(mapper.Map<WalkDto>(existingWalkDomainModel));
+        }
     }
 }
