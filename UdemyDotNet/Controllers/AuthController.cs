@@ -17,7 +17,7 @@ namespace UdemyDotNet.Controllers
         }
 
         [HttpPost]
-        [Route("/Register")]
+        [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
             var identityUser = new IdentityUser
@@ -40,6 +40,23 @@ namespace UdemyDotNet.Controllers
                 }
             }
             return BadRequest("Something went wrong!");
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
+        {
+            var user = await userManager.FindByEmailAsync(loginRequestDto.Username);
+            if(user != null)
+            {
+                var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginRequestDto.Password);
+                if (checkPasswordResult)
+                {
+                    //create token
+                    return Ok();
+                }
+            }
+            return BadRequest("Username or password incorrect");
         }
     }
 }
